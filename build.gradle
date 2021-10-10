@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+}
+
+group 'garden.parsley'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    cdkVersion = "1.90.1"
+    sdkVersion = "2.11.6"
+}
+
+
+dependencies {
+    implementation("com.github.docker-java:docker-java:3.2.5")
+    implementation("software.amazon.awscdk:core:$cdkVersion")
+    implementation("software.amazon.awscdk:s3:$cdkVersion")
+    implementation("software.amazon.awscdk:ec2:$cdkVersion")
+    implementation("software.amazon.awscdk:ecr:$cdkVersion")
+    implementation("software.amazon.awscdk:ecs:$cdkVersion")
+    implementation("software.amazon.awscdk:rds:$cdkVersion")
+    implementation("software.amazon.awscdk:elasticache:$cdkVersion")
+    implementation("software.amazon.awscdk:efs:$cdkVersion")
+    implementation("software.amazon.awscdk:certificatemanager:$cdkVersion")
+    implementation("software.amazon.awscdk:ssm:$cdkVersion")
+    implementation("software.amazon.awssdk:s3:$sdkVersion")
+    implementation("software.amazon.awssdk:ecs:$sdkVersion")
+    implementation("software.amazon.awssdk:ecr:$sdkVersion")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
