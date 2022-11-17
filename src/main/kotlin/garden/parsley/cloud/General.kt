@@ -1,7 +1,7 @@
 package garden.parsley.cloud
 
-import software.amazon.awscdk.core.App
-import software.amazon.awscdk.core.Stack
+import software.amazon.awscdk.App
+import software.amazon.awscdk.Stack
 import software.amazon.awscdk.services.ec2.*
 import software.amazon.awscdk.services.ecs.Cluster
 import software.amazon.awscdk.services.ecs.EfsVolumeConfiguration
@@ -43,19 +43,9 @@ fun main() {
         .managedPolicies(listOf(ManagedPolicy.fromAwsManagedPolicyName("AmazonSSMManagedInstanceCore")))
         .build()
 
-    val build = Instance.Builder.create(vpc, "BuildBox")
-        .vpc(vpc)
-        .vpcSubnets(SubnetSelection.Builder().subnets(vpc.publicSubnets).build())
-        .role(role)
-        .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MICRO))
-        .machineImage(AmazonLinuxImage(AmazonLinuxImageProps.Builder()
-            .edition(AmazonLinuxEdition.STANDARD)
-            .generation(AmazonLinuxGeneration.AMAZON_LINUX_2)
-            .build()))
-        .build()
-
     val cluster = Cluster.Builder.create(vpc, "GeneralCluster")
         .clusterName("GeneralCluster")
+        .enableFargateCapacityProviders(true)
         .vpc(vpc)
         .build()
 
